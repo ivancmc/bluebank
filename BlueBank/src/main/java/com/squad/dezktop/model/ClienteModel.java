@@ -26,7 +26,7 @@ public class ClienteModel
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataNascimento;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="cliente")
 	private ContaModel conta;
 	
 	public ContaModel getConta() {

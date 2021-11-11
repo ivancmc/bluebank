@@ -1,5 +1,7 @@
 package com.squad.dezktop.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,9 +15,10 @@ public class ContaModel
 	@Id
 	private String numeroConta;
 	private String agencia;
-	private double saldo;
+	private BigDecimal saldo;
+	private boolean ativa;
 	
-	@OneToOne(mappedBy = "conta")
+	@OneToOne //(mappedBy = "conta")
 	@JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
 	private ClienteModel cliente;
 	
@@ -31,10 +34,10 @@ public class ContaModel
 	public void setAgencia(String agencia) {
 		this.agencia = agencia;
 	}
-	public double getSaldo() {
+	public BigDecimal getSaldo() {
 		return saldo;
 	}
-	public void setSaldo(double saldo) {
+	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}
 	public ClienteModel getCliente() {
@@ -42,5 +45,11 @@ public class ContaModel
 	}
 	public void setCliente(ClienteModel cliente) {
 		this.cliente = cliente;
+	}
+	public boolean isAtiva() {
+		return ativa;
+	}
+	public void setAtiva(boolean ativa) {
+		this.ativa = ativa;
 	}
 }
