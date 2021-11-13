@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "conta")
 public class ContaModel 
@@ -16,9 +18,9 @@ public class ContaModel
 	private String numeroConta;
 	private String agencia;
 	private BigDecimal saldo;
-	private boolean ativa;
-	
-	@OneToOne //(mappedBy = "conta")
+
+	@JsonIgnore
+	@OneToOne
 	@JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
 	private ClienteModel cliente;
 	
@@ -46,10 +48,9 @@ public class ContaModel
 	public void setCliente(ClienteModel cliente) {
 		this.cliente = cliente;
 	}
-	public boolean isAtiva() {
-		return ativa;
+	public String getClienteCPF() {
+		return cliente.getCpf();
 	}
-	public void setAtiva(boolean ativa) {
-		this.ativa = ativa;
-	}
+	
+	
 }

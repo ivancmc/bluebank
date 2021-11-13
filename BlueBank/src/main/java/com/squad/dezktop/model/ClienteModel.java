@@ -5,23 +5,36 @@ import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "cliente")
-public class ClienteModel 
-{
+public class ClienteModel{
+	
 	@Id
+	@Size(min=11, max=11)
 	private String cpf;
+	
+	@NotEmpty(message = "O nome deve ser preenchido")
 	private String nome;
+	@NotEmpty(message = "O RG deve ser preenchido")
 	private String rg;
+	@NotEmpty(message = "O endereço deve ser preenchido")
 	private String endereco;
+	@NotEmpty(message = "O email deve ser preenchido")
 	private String email;
-	private String sexo;
+	@NotEmpty(message = "O número de telefone deve ser preenchido")
+	private String telefone;
+	
+	@Size(min = 4, max = 4)
+	private String senha;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataNascimento;
@@ -65,16 +78,22 @@ public class ClienteModel
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getSexo() {
-		return sexo;
+	public String getTelefone() {
+		return telefone;
 	}
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 	public Calendar getDataNascimento() {
 		return dataNascimento;
 	}
 	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }
