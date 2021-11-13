@@ -2,6 +2,7 @@ package com.squad.dezktop.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,9 @@ public class ContaController {
 	
 	
 	@GetMapping(value = "/cpf/{cpf}")
-	public ResponseEntity<ContaModel> getById(@PathVariable String cpf){
-		return ResponseEntity.ok(contaService.getByCpf(cpf));
+	public ResponseEntity<Object> getById(@PathVariable String cpf){
+		return contaService.getByCpf(cpf) != null ? ResponseEntity.ok(contaService.getByCpf(cpf)) : 
+			 ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping(value = "/numero/{numero}")

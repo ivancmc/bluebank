@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import com.squad.dezktop.model.ClienteModel;
 import com.squad.dezktop.repository.ClienteRepository;
 
+
 @Service
 public class ClienteService {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired ContaService contaService;
+	
 	public ClienteModel create(ClienteModel cliente) {
+		cliente.setConta(contaService.create(cliente));
 		return clienteRepository.save(cliente);
 	}
 	
@@ -46,6 +50,19 @@ public class ClienteService {
 		ClienteModel cliente = getByCpf(cpf).getBody();
 		clienteRepository.delete(cliente);
 	}
+	
+	/*
+	public boolean validarCpf(String cpf) {
+		Pattern patternCpf = Pattern.compile("(\\d{3})(\\d{3})(\\d{3})(\\d{2})");
+		Matcher matcher = patternCpf.matcher(cpf);
+		return matcher.matches();
+	}
+	public boolean validaremail(String cpf) {
+		Pattern patternCpf = Pattern.compile("\\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b");
+		Matcher matcher = patternCpf.matcher(cpf);
+		return matcher.matches();
+	}
+	*/
 	
 
 }

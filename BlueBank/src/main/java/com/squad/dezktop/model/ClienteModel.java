@@ -3,11 +3,13 @@ package com.squad.dezktop.model;
 import java.util.Calendar;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
@@ -19,7 +21,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class ClienteModel{
 	
 	@Id
+	@Column(unique=true)
 	@Size(min=11, max=11)
+	@Pattern(regexp = "(\\d{11})")
 	private String cpf;
 	
 	@NotEmpty(message = "O nome deve ser preenchido")
@@ -28,12 +32,15 @@ public class ClienteModel{
 	private String rg;
 	@NotEmpty(message = "O endereço deve ser preenchido")
 	private String endereco;
+	
 	@NotEmpty(message = "O email deve ser preenchido")
+	@Pattern(regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$")
 	private String email;
 	@NotEmpty(message = "O número de telefone deve ser preenchido")
 	private String telefone;
 	
 	@Size(min = 4, max = 4)
+	@Pattern(regexp = "(\\d{4})")
 	private String senha;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")

@@ -34,19 +34,27 @@ public class ClienteController
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteModel> post (@RequestBody ClienteModel cliente){
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
+	public ResponseEntity<Object> post (@RequestBody ClienteModel cliente){
+		try {
+			if (clienteService.getByCpf(cliente.getCpf()).getStatusCode().equals(HttpStatus.NOT_FOUND)){
+				return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
+			} else {
+				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>("Não foi possível criar o cliente, verifique os dados.", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping(value = "/{cpf}")
-	public ResponseEntity<ClienteModel> getById(@PathVariable String cpf){
+	public ResponseEntity<ClienteModel> getByCpf(@PathVariable String cpf){
 		return clienteService.getByCpf(cpf);
 	}
 	
 	@DeleteMapping(value = "/{cpf}")
-	public ResponseEntity<Void> delete(@PathVariable String cpf) {
+	public ResponseEntity<Object> delete(@PathVariable String cpf) {
 	clienteService.delete(cpf);
-		return ResponseEntity.noContent().build();
+		return new ResponseEntity<>("Cliente deletado com sucesso.", HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/{cpf}")
