@@ -20,7 +20,7 @@ public class ContaController {
 	
 	
 	@GetMapping(value = "/cpf/{cpf}")
-	public ResponseEntity<Object> getById(@PathVariable String cpf){
+	public ResponseEntity<Object> getByCpf(@PathVariable String cpf){
 		return contaService.getByCpf(cpf) != null ? ResponseEntity.ok(contaService.getByCpf(cpf)) : 
 			 ResponseEntity.notFound().build();
 	}
