@@ -35,6 +35,18 @@ public class ContaService {
 		return contaRepository.procuraPorCpf(cpf);
 	}
 	
+	public ContaModel mudaSaldo(String numero, String acao, String valor) {
+		ContaModel conta = getByNumero(numero).getBody();
+		if (conta != null) {
+			if (acao.equals("credita")) {
+				conta.setSaldo(conta.getSaldo().add(new BigDecimal(valor)));
+			} else if (acao.equals("debita")) {
+				conta.setSaldo(conta.getSaldo().subtract(new BigDecimal(valor)));
+			}
+			contaRepository.save(conta);
+		}
+		return conta;
+	}
 	
 	private static String randomDigitsAsString(int length) {
 		int leftLimit = 48; // digito '0' na tabela ASCII

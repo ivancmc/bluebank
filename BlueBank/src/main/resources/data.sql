@@ -1,31 +1,3 @@
-create database bluebank;
-use bluebank;
-
-select * from cliente;
-select * from conta;
-
-CREATE TABLE `cliente` (
-  `cpf` varchar(11) NOT NULL,
-  `data_nascimento` datetime DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `endereco` varchar(255) DEFAULT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `rg` varchar(255) DEFAULT NULL,
-  `senha` varchar(4) DEFAULT NULL,
-  `telefone` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`cpf`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE `conta` (
-  `numero_conta` varchar(255) NOT NULL,
-  `agencia` varchar(255) DEFAULT NULL,
-  `saldo` decimal(19,2) DEFAULT NULL,
-  `cliente_cpf` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`numero_conta`),
-  KEY `FK9gye6g3vk7w430iyrdynyogh` (`cliente_cpf`),
-  CONSTRAINT `FK9gye6g3vk7w430iyrdynyogh` FOREIGN KEY (`cliente_cpf`) REFERENCES `cliente` (`cpf`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 INSERT INTO bluebank.cliente (cpf,data_nascimento,email,endereco,nome,rg,senha,telefone) VALUES
 	 ('40680153098','1985-11-17 00:00:00','alana@gmail.com','Maceio','Alana Amaral','483761126','2294','3488-4483'),
 	 ('46466174042','1978-04-03 00:00:00','vinicius@gmail.com','Joao Pessoa','Vinicius Silva','408112396','5276','29284845'),
