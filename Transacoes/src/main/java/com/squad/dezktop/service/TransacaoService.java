@@ -1,6 +1,8 @@
 package com.squad.dezktop.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class TransacaoService {
 
 	@Autowired
 	private TransacaoRepository transacaoRepository;
-	
+
 	public List<TransacaoModel> extrato(String numeroConta) {
 		return transacaoRepository.getByConta(numeroConta);
 	}
@@ -46,7 +48,6 @@ public class TransacaoService {
 			if (conta.getSaldo().compareTo(new BigDecimal(valor)) == -1) {
 				// saldo menor do que o valor do saque, lançar msg de saldo insuficiente
 				throw new Exception("Saldo insuficiente.");
-//				return null;
 			}
 			TransacaoModel saque = new TransacaoModel();
 			saque.setTipo(4);
@@ -60,24 +61,41 @@ public class TransacaoService {
 			return null;
 		}
 	}
-	
-	// TODO - Pesquisar a conta baseada no número para poder associar
-	// "valor" recebe valor do body e muda o saldo da conta
-	// "momento" é criado automaticamente
 
-	// @ManyToMany - a conta tem uma lista de transações e a transação tem um metodo
-	// de contas / dicionário
-	// Cada transação tem um metodo com duas contas (origem e destino - são as
-	// chaves)
+	public List<TransacaoModel> transferencia(TransacaoModel transacao) throws Exception {
+		ContaModel contaOrigem;
+		ContaModel contaDestino;
+		try {
+			contaOrigem = workerFeignClient.getByNumero(transacao.getContaOrigem()).getBody();
+			contaDestino = workerFeignClient.getByNumero(transacao.getContaDestino()).getBody();
+		} catch (Exception e) {
+			throw new Exception("Conta não identificada.");
+		}
+		if (contaOrigem.getSaldo().compareTo(transacao.getValor()) == -1) {
+			// saldo menor do que o valor da transferencia, lançar msg de saldo insuficiente
+			throw new Exception("Saldo insuficiente.");
+		}
+		TransacaoModel debito = new TransacaoModel();
+		debito.setTipo(transacao.getTipo().getCod());
+		debito.setCategoria(1);
+		debito.setValor(transacao.getValor());
+		debito.setContaOrigem(contaOrigem.getNumeroConta());
+		debito.setContaDestino(contaDestino.getNumeroConta());
 
-	/**
-	 * 
-	 * @Temporal(TemporalType.TIMESTAMP) private Calendar createdAt;
-	 * 
-	 * @Column private Date criadoEm;
-	 * 
-	 * @PrePersist protected void onCreate() { criadoEm = new Date(); }
-	 * 
-	 * @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	 **/
+		TransacaoModel credito = new TransacaoModel();
+		credito.setTipo(transacao.getTipo().getCod());
+		credito.setCategoria(2);
+		credito.setValor(transacao.getValor());
+		credito.setContaOrigem(contaOrigem.getNumeroConta());
+		credito.setContaDestino(contaDestino.getNumeroConta());
+
+		transacaoRepository.save(debito);
+		transacaoRepository.save(credito);
+		workerFeignClient.debita(contaOrigem.getNumeroConta(), transacao.getValor().toString());
+		workerFeignClient.credita(contaDestino.getNumeroConta(), transacao.getValor().toString());
+		List<TransacaoModel> transacoes = new ArrayList<>();
+		transacoes.add(debito);
+		transacoes.add(credito);
+		return transacoes;
+	}
 }

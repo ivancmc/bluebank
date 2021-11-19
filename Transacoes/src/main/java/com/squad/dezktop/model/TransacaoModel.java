@@ -28,13 +28,7 @@ public class TransacaoModel {
 	private Date momento;
 	private BigDecimal valor;
 	private int categoria;
-
-//	@ManyToOne
-//	@JsonIgnoreProperties("contaOrigem")
 	private String contaOrigem;
-
-//	@ManyToOne
-//	@JsonIgnoreProperties("contaDestino")
 	private String contaDestino;
 
 	@PrePersist
