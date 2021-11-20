@@ -54,4 +54,14 @@ public class TransacaoController
 			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
+	
+	@PostMapping("transferencia/externa")
+	public ResponseEntity<TransacaoModel> transferenciaExterna (@RequestBody TransacaoModel transacao){
+		try {
+			TransacaoModel transacaoFinal = transacaoService.transferenciaExterna(transacao);
+			return ResponseEntity.status(HttpStatus.CREATED).body(transacaoFinal);
+		} catch (Exception e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
+	}
 }

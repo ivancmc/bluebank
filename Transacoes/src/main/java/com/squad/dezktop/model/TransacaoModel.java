@@ -3,12 +3,14 @@ package com.squad.dezktop.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -30,7 +32,50 @@ public class TransacaoModel {
 	private int categoria;
 	private String contaOrigem;
 	private String contaDestino;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="transacao")
+	private ContaExternaModel contaExterna;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="transacao")
+	private AgendamentoModel agendamento;
 
+	public TransacaoModel() {}
+	
+	public TransacaoModel(int tipo, BigDecimal valor, int categoria, String contaOrigem, String contaDestino) {
+		this.tipo = tipo;
+		this.valor = valor;
+		this.categoria = categoria;
+		this.contaOrigem = contaOrigem;
+		this.contaDestino = contaDestino;
+	}
+	
+	
+	public void TransacaoModelDeposito(int tipo, BigDecimal valor, int categoria, String contaDestino) {
+		this.tipo = tipo;
+		this.valor = valor;
+		this.categoria = categoria;
+		this.contaDestino = contaDestino;
+	}
+
+	public void TransacaoModelSaque(int tipo, BigDecimal valor, int categoria, String contaOrigem) {
+		this.tipo = tipo;
+		this.valor = valor;
+		this.categoria = categoria;
+		this.contaOrigem = contaOrigem;
+	}
+	
+	public TransacaoModel(int tipo, BigDecimal valor, int categoria, String contaOrigem, ContaExternaModel contaExterna) {
+		this.tipo = tipo;
+		this.valor = valor;
+		this.categoria = categoria;
+		this.contaOrigem = contaOrigem;
+		this.contaExterna = contaExterna;
+	}
+	
+	//Fazer construtor de agendamento
+	
+	//Getters and setters
+	
 	@PrePersist
 	protected void onCreate() {
 		momento = new Date();
@@ -91,4 +136,22 @@ public class TransacaoModel {
 	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
+
+	public ContaExternaModel getContaExterna() {
+		return contaExterna;
+	}
+
+	public void setContaExterna(ContaExternaModel contaExterna) {
+		this.contaExterna = contaExterna;
+	}
+
+	public AgendamentoModel getAgendamento() {
+		return agendamento;
+	}
+
+	public void setAgendamento(AgendamentoModel agendamento) {
+		this.agendamento = agendamento;
+	}
+	
+	
 }

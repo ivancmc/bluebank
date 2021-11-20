@@ -30,19 +30,13 @@ public class TransacaoService {
 		} catch (Exception e) {
 			throw new Exception("Conta não identificada.");
 		}
-												//Se o valor de entrada for menor ou igual a zero, lança a exceção.
-		if (transacao.getValor().signum() == 0) {
+		//Se o valor de entrada for menor ou igual a zero, lança a exceção.
+		if (transacao.getValor().signum() == 0 || transacao.getValor().signum() < 0) {
 			throw new Exception("Informe um valor maior que zero.");
-		}
-		else if(transacao.getValor().signum() < 0) {
-			throw new Exception("Não é possível realizar um deposito com um valor negativo.");
 		}
 
 		TransacaoModel deposito = new TransacaoModel();
-		deposito.setTipo(5);
-		deposito.setCategoria(2);
-		deposito.setValor(transacao.getValor());
-		deposito.setContaDestino(conta.getNumeroConta());
+		deposito.TransacaoModelDeposito(5, transacao.getValor(), 2, conta.getNumeroConta());
 		transacaoRepository.save(deposito);
 		workerFeignClient.credita(conta.getNumeroConta(), transacao.getValor().toString());
 		return deposito;
@@ -56,22 +50,17 @@ public class TransacaoService {
 		} catch (Exception e) {
 			throw new Exception("Conta não identificada.");
 		}
-				//Saldo menor do que o valor do saque, lançar mensagem de saldo insuficiente
+		//Saldo menor do que o valor do saque, lançar mensagem de saldo insuficiente
 		if (conta.getSaldo().compareTo(transacao.getValor()) == -1) {
 			throw new Exception("Saldo insuficiente.");
 		}
-			// Se o valor de entrada for menor ou igual a zero, lança a exceção.
-		if (transacao.getValor().signum() == 0) {
+		//Se o valor de entrada for menor ou igual a zero, lança a exceção.
+		if (transacao.getValor().signum() == 0 || transacao.getValor().signum() < 0) {
 			throw new Exception("Informe um valor maior que zero.");
-		} else if (transacao.getValor().signum() < 0) {
-			throw new Exception("Não é possível realizar um saque com um valor negativo.");
 		}
 
 		TransacaoModel saque = new TransacaoModel();
-		saque.setTipo(4);
-		saque.setCategoria(1);
-		saque.setValor(transacao.getValor());
-		saque.setContaOrigem(conta.getNumeroConta());
+		saque.TransacaoModelSaque(4, transacao.getValor(), 1, conta.getNumeroConta());
 		transacaoRepository.save(saque);
 		workerFeignClient.debita(conta.getNumeroConta(), transacao.getValor().toString());
 		return saque;
@@ -92,34 +81,70 @@ public class TransacaoService {
 			throw new Exception("Saldo insuficiente.");
 		}
 		
-				// Se o valor de entrada for menor ou igual a zero, lança a exceção.
-		if (transacao.getValor().signum() == 0) {
+		//Se o valor de entrada for menor ou igual a zero, lança a exceção.
+		if (transacao.getValor().signum() == 0 || transacao.getValor().signum() < 0) {
 			throw new Exception("Informe um valor maior que zero.");
-		} else if (transacao.getValor().signum() < 0) {
-			throw new Exception("Não é possível realizar uma transferência com um valor negativo.");
 		}
 		
-		TransacaoModel debito = new TransacaoModel();
-		debito.setTipo(transacao.getTipo().getCod());
-		debito.setCategoria(1);
-		debito.setValor(transacao.getValor());
-		debito.setContaOrigem(contaOrigem.getNumeroConta());
-		debito.setContaDestino(contaDestino.getNumeroConta());
-
-		TransacaoModel credito = new TransacaoModel();
-		credito.setTipo(transacao.getTipo().getCod());
-		credito.setCategoria(2);
-		credito.setValor(transacao.getValor());
-		credito.setContaOrigem(contaOrigem.getNumeroConta());
-		credito.setContaDestino(contaDestino.getNumeroConta());
-
-		transacaoRepository.save(debito);
-		transacaoRepository.save(credito);
-		workerFeignClient.debita(contaOrigem.getNumeroConta(), transacao.getValor().toString());
-		workerFeignClient.credita(contaDestino.getNumeroConta(), transacao.getValor().toString());
+		TransacaoModel debito = new TransacaoModel(transacao.getTipo().getCod(),
+													transacao.getValor(),
+													1,
+													contaOrigem.getNumeroConta(),
+													contaDestino.getNumeroConta());
+	
+		TransacaoModel credito = new TransacaoModel(transacao.getTipo().getCod(),
+													transacao.getValor(),
+													2,
+													contaOrigem.getNumeroConta(),
+													contaDestino.getNumeroConta());
+		
 		List<TransacaoModel> transacoes = new ArrayList<>();
 		transacoes.add(debito);
 		transacoes.add(credito);
+		
+		transacaoRepository.saveAll(transacoes);
+		
+		//Try e so realmente faz caso esteja tudo certo
+		workerFeignClient.debita(contaOrigem.getNumeroConta(), transacao.getValor().toString());
+		workerFeignClient.credita(contaDestino.getNumeroConta(), transacao.getValor().toString());
+		
 		return transacoes;
 	}
+
+	public TransacaoModel transferenciaExterna(TransacaoModel transacao) throws Exception
+	{
+		ContaModel conta;
+		try {
+			conta = workerFeignClient.getByNumero(transacao.getContaOrigem()).getBody();
+		} catch (Exception e) {
+			throw new Exception("Conta não identificada.");
+		}
+		//Saldo menor do que o valor do saque, lançar mensagem de saldo insuficiente
+		if (conta.getSaldo().compareTo(transacao.getValor()) == -1) {
+			throw new Exception("Saldo insuficiente.");
+		}
+		//Se o valor de entrada for menor ou igual a zero, lança a exceção.
+		if (transacao.getValor().signum() == 0 || transacao.getValor().signum() < 0) {
+			throw new Exception("Informe um valor maior que zero.");
+		}
+
+		TransacaoModel transferencia = new TransacaoModel(
+														transacao.getTipo().getCod(),
+														transacao.getValor(),
+														2,
+														conta.getNumeroConta(),
+														transacao.getContaExterna());
+		
+		transacaoRepository.save(transferencia);
+		workerFeignClient.debita(conta.getNumeroConta(), transacao.getValor().toString());
+		return transferencia;
+		
+	}
+	
+
+
+
+
+
+
 }
