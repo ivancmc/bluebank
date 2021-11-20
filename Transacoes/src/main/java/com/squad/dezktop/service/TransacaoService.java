@@ -135,8 +135,13 @@ public class TransacaoService {
 														conta.getNumeroConta(),
 														transacao.getContaExterna());
 		
-		transacaoRepository.save(transferencia);
+		TransacaoModel transacao2 = transacaoRepository.save(transferencia);
+		transacao2.getContaExterna().setTransacao(transacao2);
+		transacaoRepository.save(transacao2);
+		
+		
 		workerFeignClient.debita(conta.getNumeroConta(), transacao.getValor().toString());
+		
 		return transferencia;
 		
 	}
