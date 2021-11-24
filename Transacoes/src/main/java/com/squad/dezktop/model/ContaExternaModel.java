@@ -1,5 +1,6 @@
 package com.squad.dezktop.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,7 @@ public class ContaExternaModel {
 	private String conta;
 	
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name = "transacao_id", referencedColumnName = "id")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "contaExterna")
 	private TransacaoModel transacao;
 	
 	public Long getId() {

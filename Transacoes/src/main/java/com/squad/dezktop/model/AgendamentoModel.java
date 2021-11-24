@@ -14,13 +14,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "agendamentos")
+@Table(name = "agendamento")
 public class AgendamentoModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String status;
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
 	private Date data;
 	
@@ -38,14 +37,6 @@ public class AgendamentoModel {
 		this.id = id;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public Date getData() {
 		return data;
 	}
@@ -61,5 +52,4 @@ public class AgendamentoModel {
 	public void setTransacao(TransacaoModel transacao) {
 		this.transacao = transacao;
 	}
-
 }

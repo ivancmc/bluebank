@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.squad.dezktop.model.AgendamentoModel;
 import com.squad.dezktop.model.TransacaoModel;
 import com.squad.dezktop.repository.AgendamentoRepository;
+import com.squad.dezktop.repository.ContaExternaRepository;
+import com.squad.dezktop.repository.TransacaoRepository;
 
 
 @Service
@@ -21,6 +23,12 @@ public class AgendamentoService {
 
 	@Autowired
 	private AgendamentoRepository agendamentoRepository;
+	
+	@Autowired
+	private TransacaoRepository transacaoRepository;
+	
+	@Autowired
+	private ContaExternaRepository contaExternaRepository;	
 
 	public List<TransacaoModel> efetuarAgendamento() throws Exception {
 
@@ -35,21 +43,14 @@ public class AgendamentoService {
 		
 		List <TransacaoModel> transacoes = new ArrayList<>();
 		
-		for(AgendamentoModel agendamento : agendamentos) {
-	
+		for(AgendamentoModel agendamento : agendamentos) {	
 			agendamento.getTransacao().setAgendamento(null);
-			
+			if (agendamento.getTransacao().getContaExterna() != null) {
+				agendamento.getTransacao().getContaExterna().setId(null);
+			}
 			transacoes.addAll(transacaoService.transferencia(agendamento.getTransacao()));
-			agendamento.getTransacao().setAgendamento(agendamento);
-			System.out.println(agendamento);
-			//agendamentoRepository.deleteByid(agendamento);
-		
-		}
-		
-		agendamentoRepository.deleteByAgendamento(cal.getTime());
-		
+			transacaoRepository.deleteById(agendamento.getTransacao().getId());		
+		}		
 		return transacoes;
-
 	}
-
 }

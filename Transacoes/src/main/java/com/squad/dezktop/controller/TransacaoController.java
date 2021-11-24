@@ -24,6 +24,11 @@ public class TransacaoController
 	public ResponseEntity<List<TransacaoModel>> extrato(@PathVariable String numeroConta){
 		return ResponseEntity.ok(transacaoService.extrato(numeroConta));
 	}
+	
+	@GetMapping("extrato/{numeroConta}/{mes}/{ano}")
+	public ResponseEntity<List<TransacaoModel>> extratoPorMes(@PathVariable String numeroConta, @PathVariable String mes, @PathVariable String ano){
+		return ResponseEntity.ok(transacaoService.extratoPorMes(numeroConta, mes, ano));
+	}
 
 	@PostMapping("deposito")
 	public ResponseEntity<TransacaoModel> deposito (@RequestBody TransacaoModel transacao){
@@ -45,23 +50,13 @@ public class TransacaoController
 		}
 	}
 
-	@PostMapping("transferencia")
+	@PostMapping({"transferencia", "pagamento"})
 	public ResponseEntity<List<TransacaoModel>> transferencia (@RequestBody TransacaoModel transacao){
 		try {
 			List<TransacaoModel> transacoes = transacaoService.transferencia(transacao);
 			return ResponseEntity.status(HttpStatus.CREATED).body(transacoes);
 		} catch (Exception e) {
 			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-		}
-	}
-	
-	@PostMapping("transferencia/externa")
-	public ResponseEntity<TransacaoModel> transferenciaExterna (@RequestBody TransacaoModel transacao){
-		try {
-			TransacaoModel transacaoFinal = transacaoService.transferenciaExterna(transacao);
-			return ResponseEntity.status(HttpStatus.CREATED).body(transacaoFinal);
-		} catch (Exception e) {
-			return new ResponseEntity(e.getMessage(), HttpStatus.UNAUTHORIZED);
 		}
 	}
 }

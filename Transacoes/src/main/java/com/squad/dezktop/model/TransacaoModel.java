@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -33,10 +34,12 @@ public class TransacaoModel {
 	private String contaOrigem;
 	private String contaDestino;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="transacao")
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "conta_externa", referencedColumnName = "id")
 	private ContaExternaModel contaExterna;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="transacao")
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="transacao")
 	private AgendamentoModel agendamento;
 
 	public TransacaoModel() {}
@@ -47,33 +50,17 @@ public class TransacaoModel {
 		this.categoria = categoria;
 		this.contaOrigem = contaOrigem;
 		this.contaDestino = contaDestino;
-	}
+	}	
 	
-	
-	public void TransacaoModelDeposito(int tipo, BigDecimal valor, int categoria, String contaDestino) {
+	public TransacaoModel(int tipo, BigDecimal valor, int categoria, String contaOrigem, String contaDestino, ContaExternaModel contaExterna) {
 		this.tipo = tipo;
 		this.valor = valor;
 		this.categoria = categoria;
+		this.contaOrigem = contaOrigem;
 		this.contaDestino = contaDestino;
-	}
-
-	public void TransacaoModelSaque(int tipo, BigDecimal valor, int categoria, String contaOrigem) {
-		this.tipo = tipo;
-		this.valor = valor;
-		this.categoria = categoria;
-		this.contaOrigem = contaOrigem;
-	}
-	
-	public TransacaoModel(int tipo, BigDecimal valor, int categoria, String contaOrigem, ContaExternaModel contaExterna) {
-		this.tipo = tipo;
-		this.valor = valor;
-		this.categoria = categoria;
-		this.contaOrigem = contaOrigem;
 		this.contaExterna = contaExterna;
 	}
-	
-	//Fazer construtor de agendamento
-	
+		
 	//Getters and setters
 	
 	@PrePersist

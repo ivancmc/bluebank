@@ -11,15 +11,15 @@ import com.squad.dezktop.model.AgendamentoModel;
 public interface AgendamentoRepository extends JpaRepository <AgendamentoModel,Long> {
  
 
-	@Query(value = "SELECT * FROM agendamentos a"
+	@Query(value = "SELECT * FROM agendamento a"
 			+ " WHERE a.data LIKE :hoje",
 			nativeQuery = true)
 	public List<AgendamentoModel> getByAgendamento(Date hoje);
 	
 	
-	@Query(value = "DELETE  FROM agendamentos a"
+	@Query(value = "DELETE  FROM agendamento a"
 			+ " WHERE a.data LIKE :hoje",
 						nativeQuery = true)
-	public void  deleteByAgendamento(Date hoje);
+	public void deleteByAgendamento(Date hoje);
 	
 }

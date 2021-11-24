@@ -35,6 +35,10 @@ public class ClienteService {
 	public ClienteModel update(String cpf, ClienteModel cliente) {
 		ClienteModel clienteAtualizado = getByCpf(cpf).getBody();
 		
+		if (clienteAtualizado == null) {
+			return null;
+		}
+		
 		clienteAtualizado.setDataNascimento(cliente.getDataNascimento());
 		clienteAtualizado.setEmail(cliente.getEmail());
 		clienteAtualizado.setEndereco(cliente.getEndereco());
