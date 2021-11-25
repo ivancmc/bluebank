@@ -19,47 +19,46 @@ import com.squad.dezktop.service.ClienteService;
 import com.squad.dezktop.service.ContaService;
 
 @RestController
-@RequestMapping(value = "cliente")
-public class ClienteController 
-{
+@RequestMapping
+public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	ContaService contaService;
 
-	@GetMapping
-	public ResponseEntity<List<ClienteModel>> getAll(){
+	@GetMapping("clientes")
+	public ResponseEntity<List<ClienteModel>> getAll() {
 		return ResponseEntity.ok(clienteService.getAll());
 	}
-	
-	@PostMapping
-	public ResponseEntity<Object> post (@RequestBody ClienteModel cliente){
+
+	@PostMapping("cliente")
+	public ResponseEntity<Object> post(@RequestBody ClienteModel cliente) {
 		try {
-			if (clienteService.getByCpf(cliente.getCpf()).getStatusCode().equals(HttpStatus.NOT_FOUND)){
+			if (clienteService.getByCpf(cliente.getCpf()).getStatusCode().equals(HttpStatus.NOT_FOUND)) {
 				return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
 			} else {
 				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<>("Não foi possível criar o cliente, verifique os dados.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Não foi possível criar o cliente, verifique os dados.",
+					HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	@GetMapping(value = "/{cpf}")
-	public ResponseEntity<ClienteModel> getByCpf(@PathVariable String cpf){
+
+	@GetMapping(value = "cliente/{cpf}")
+	public ResponseEntity<ClienteModel> getByCpf(@PathVariable String cpf) {
 		return clienteService.getByCpf(cpf);
 	}
-	
-	@DeleteMapping(value = "/{cpf}")
+
+	@DeleteMapping(value = "cliente/{cpf}")
 	public ResponseEntity<Object> delete(@PathVariable String cpf) {
-	clienteService.delete(cpf);
+		clienteService.delete(cpf);
 		return new ResponseEntity<>("Cliente deletado com sucesso.", HttpStatus.OK);
 	}
-	
-	@PutMapping(value = "/{cpf}")
-	public ResponseEntity<ClienteModel> update(@PathVariable String cpf, @RequestBody 
-			ClienteModel cliente){
+
+	@PutMapping(value = "cliente/{cpf}")
+	public ResponseEntity<ClienteModel> update(@PathVariable String cpf, @RequestBody ClienteModel cliente) {
 		return ResponseEntity.ok().body(clienteService.update(cpf, cliente));
 	}
 
