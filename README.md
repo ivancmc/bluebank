@@ -1,3 +1,5 @@
+![BlueBankLogo](https://user-images.githubusercontent.com/89454220/143690942-baab5188-1a98-4cf0-b267-cb83330dc7dc.jpeg)
+
 # BLUE BANK
 
 Uma API para gerenciar as transações de um banco fictício utilizando Java, MySQL e AWS, sendo o projeto final do Bootcamp da Pan Academy.
