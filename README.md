@@ -45,7 +45,7 @@ do histórico de transações entre as contas.
 
 ### DESENVOLVIMENTO
 
-#### QUADRO kANBAN
+#### QUADRO KANBAN
 
 Efetuamos a aplicação por meio de Spring Boot, usando Maven, com CRUD e dividindo os as funções em microserviços, o banco de dados usado foi o MySql com deploy no Docker e pipeline em Jenkins, sendo o servidor usado para manter a aplicação  a AWS por meio da instância EC2.
 
