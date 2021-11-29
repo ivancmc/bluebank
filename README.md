@@ -26,7 +26,7 @@ do histórico de transações entre as contas.
 - Kanban com todas as tarefas organizadas e responsáveis definidos.
 
 2. Back-end:
--  Cadastro de clientes
+- Cadastro de clientes
 - Listagem de clientes
 - Atualização de clientes
 - Deletar clientes
