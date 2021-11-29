@@ -1,7 +1,6 @@
-![BlueBankLogo](Arquivos/img/bluebank.jpeg)
-
-
-# BLUE BANK
+<div>
+  <img src="Arquivos/img/bluebank.jpeg" alt="# Blue Bank" width=400 height=400>
+</div>
 
 Uma API para gerenciar as transações de um banco fictício utilizando Java, MySQL e AWS, sendo o projeto final do Bootcamp da Pan Academy.
 
