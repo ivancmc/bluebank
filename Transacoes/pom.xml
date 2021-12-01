@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.squad.dezktop</groupId>
-	<artifactId>Transacoes</artifactId>
+	<artifactId>transacoes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Transacoes</name>
+	<name>transacoes</name>
 	<description>Microsserviço responsável pelas transações bancárias.</description>
 	<properties>
 		<java.version>11</java.version>
@@ -34,7 +34,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -63,14 +62,24 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
+		<finalName>transacoes-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+		         <configuration>
+		            <mainClass>com.squad.dezktop.TransacoesApplication</mainClass>
+		            <addResources>true</addResources>
+		         </configuration>
+		         <executions>
+		            <execution>
+		               <goals>
+		                  <goal>repackage</goal>
+		               </goals>
+		            </execution>
+		         </executions>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

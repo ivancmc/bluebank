@@ -1,0 +1,49 @@
+version: '3.5'
+services:
+  db:
+    image: mysql:5.6
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=bluebank
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - ./docker/volume_mysql:/var/lib/mysql
+
+  discovery:
+    image: ivancmc/discovery-service
+    container_name: discovery-service
+    build:
+      context: ./Servidor-Eureka
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+
+  cliente-conta-service:
+    image: ivancmc/cliente-conta-service
+    container_name: cliente-conta-service
+    build:
+      context: ./BlueBank
+      dockerfile: Dockerfile
+    ports:
+      - "8101:8101"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka
+    links:
+      - db
+      - discovery
+
+  transacoes-service:
+    image: ivancmc/transacoes-service
+    container_name: transacoes-service
+    build:
+      context: ./Transacoes
+      dockerfile: Dockerfile
+    ports:
+      - "8102:8102"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka
+    links:
+      - db
+      - discovery
