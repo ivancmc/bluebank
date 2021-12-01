@@ -78,7 +78,7 @@ Procuramos criar as tarefas e histórias o mais completas possíveis, e quando n
 <img src="Arquivos/img/jira/BBP_TarefaExtrato.png" alt="Tarefa Extrato"></img>
 
 Note que:
-- Há relações entre histórias e tarefas. Nos cars de história, as tarefas "filhas" dessa história estão vinculadas, e portanto são mostradas na descição da mesma.
+- Há relações entre histórias e tarefas. Nos cards de história, as tarefas "filhas" dessa história estão vinculadas, e portanto são mostradas na descição da mesma.
 - Há descrições extras em alguns cards.
 - Os responsáveis pela tarefa são indicados nos cards na categoria "Responsáveis".
 
