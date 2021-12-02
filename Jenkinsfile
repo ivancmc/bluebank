@@ -2,6 +2,7 @@ node {
     withMaven(maven:'maven') {
         stage('Checkout') {
             git url: 'https://github.com/ivancmc/bluebank.git', branch: 'develop'
+            sh 'sudo chmod +x /var/run/docker.sock'
         }
         stage('Build Eureka') {
             dir ('Servidor-Eureka') {
