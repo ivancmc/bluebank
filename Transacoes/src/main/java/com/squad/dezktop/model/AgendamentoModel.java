@@ -1,6 +1,6 @@
 package com.squad.dezktop.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +20,7 @@ public class AgendamentoModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date data;
 	
 	@JsonIgnore
@@ -42,7 +42,7 @@ public class AgendamentoModel {
 	}
 
 	public void setData(Date data) {
-		this.data = data;
+		this.data = data ;
 	}
 
 	public TransacaoModel getTransacao() {
