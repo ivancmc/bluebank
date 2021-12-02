@@ -19,7 +19,6 @@ node {
             }
         }
         stage ('Run') {
-            sh 'sudo chmod +x /var/run/docker.sock'
             sh 'docker-compose up -d --build --force-recreate'
         }
     }
