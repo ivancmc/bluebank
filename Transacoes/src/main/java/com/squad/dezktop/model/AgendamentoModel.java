@@ -20,7 +20,9 @@ public class AgendamentoModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
+	//@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/New_York")
+	
 	private Date data;
 	
 	@JsonIgnore
