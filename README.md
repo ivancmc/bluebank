@@ -37,7 +37,7 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 - [ ] A aplicação precisa ser configurada no API Gateway da AWS.
 - [ ] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática.
 - [ ] A aplicação precisa ter no mínimo um Lambda.
-- [ ] Liste os endpoints no README.md
+- [X] Liste os endpoints no README.md
 - [ ] O Banco deve ser entregue em script SQL junto ao repositório.
 
 <h3 id="RQFuncionais">Requisitos Funcionais</h3>
@@ -50,13 +50,150 @@ Os requisitos funcionais desta API giram em torno de um CRUD entre clientes e su
 - O histórico de transações entre contas.
 
 <h3 id="endpoints">Endpoints</h3>
-Essa seção encontra-se em desenvolvimento.
+Os <b>endpoints</b> são literalmente pontas de um canal de comunicação. Neste caso em específico, o endpoint é uma das pontas da nossa API Bluebank, e por sua vez, essa API pode ser acessada/requisitada por uma URL que executa uma certa função quando chamada. Sendo assim, cada endpoint listado abaixo, executa um determinado trecho de código.
+
+<hr>
+<h4 align="center">Microsserviço de Clientes e Contas</h4>
+
+> Porta: 8101 <br>
+> Atributos entre chaves, indicam o parâmetro que você deve informar. <br>
+> Exemplo: /pesquisa/{cpf} -> ***/pesquisa/46033184050*** <br>
+> Nos endpoints de requisição do tipo ***POST*** e ***PUT*** você precisa informar os dados requeridos no corpo JSON. <br>
+
+<h4 align="center">Endpoints relacionados ao Cliente</h4>
+
+***[GET]*** Lista todos os clientes cadastrados:
+```
+/clientes
+```
+***[GET]*** Pesquisa um cliente pelo CPF:
+```
+/cliente/{cpf}
+```
+***[POST]*** Cadastra um novo cliente:
+```
+/cliente
+```
+***[PUT]*** Atualiza os dados pessoais de um cliente:
+```
+/cliente/{cpf}
+```
+***[DELETE]*** Deleta um cliente da base de dados:
+```
+/cliente/{cpf}
+```
+
+<h4 align="center">Endpoints relacionados a Conta Bancária</h4>
+
+***[GET]*** Retorna uma conta ao buscar por CPF:
+```
+/conta/cpf/{cpf}
+```
+***[GET]*** Retorna uma conta ao buscar por Número da conta:
+```
+/conta/numero/{numero}
+```
+> :warning: Os próximos dois endpoints só devem ser chamados pelo serviço de transações e não devem ser requisitados diretamente. :warning:	
+
+***[PUT]*** Adiciona valor na conta especificada:
+```
+/conta/{numero}/credita/{valor}
+```
+***[PUT]*** Diminui valor na conta especificada. 
+```
+/conta/{numero}/debita/{valor}
+```
+<hr>
+<h4 align="center">Microsserviço de Transações</h4>
+
+> Porta: 8102
+
+<h4 align="center">Endpoint relacionado ao  Agendamento</h4>
+
+***[GET]*** Efetiva as transações agendadas do dia:
+```
+/agendamento/efetivar
+```
+
+<h4 align="center">Endpoints relacionados as Transações</h4>
+
+***[GET]*** Retorna o extrato da conta especificada no mês corrente:
+```
+/extrato/{numeroConta}
+```
+***[GET]*** Retorna o extrato da conta especificada durante o mês informado:
+```
+/extrato/{numeroConta}/{mes}/{ano}
+```
+***[POST]*** Realiza uma transação de depósito na conta especificada:
+```
+/deposito
+```
+***[POST]*** Realiza uma transação de saque na conta especificada:
+```
+/saque
+```
+***[POST]*** Realiza transações (agendadas ou não) para contas internas e externas incluindo pagamentos:
+```
+/transacao
+```
+<h3 id="swagger">Swagger</h3>
+O <a href="https://swagger.io/">Swagger(OpenAPI)</a> é uma especificação aberta para definição/descrição de APIs REST. Você pode achar mais informações sobre o Swagger <a href="https://www.ibm.com/docs/pt-br/integration-bus/10.0?topic=ssmkhh-10-0-0-com-ibm-etools-mft-doc-bi12018--htm">aqui</a> e pode testar uma demonstração ao vivo do Swagger aqui: <a href="https://petstore.swagger.io/">Swagger Petstore</a>.<br>
+Utilizamos o <a href="https://github.com/swagger-api/swagger-ui">Swagger UI</a> para documentar, visualizar e requisitar/acessar a nossa API em um navegador Web.
+<h4 align="center">Microsserviços de clientes e contas</h4>
+<img src="Arquivos/img/swagger/Swagger-cliente.jpg"></img>
+<img src="Arquivos/img/swagger/Swagger-conta.jpg"></img>
+<img src="Arquivos/img/swagger/Swagger-agendamento.jpg"></img>
+<img src="Arquivos/img/swagger/Swagger-transacaoes.jpg"></img>
+
+Note que há alguns links além das descrições gerais do projeto e das descrições de cada endpoint.
+- O primeiro link refere-se a visualização de um documento JSON com todos os endpoints da nossa API. Posteriormente, iremos importar esses arquivos no Postman, clique <a href="Arquivos/json">aqui</a> para acessá-los ou salve diretamente do seu navegador clicando em: botão direito-> Salvar como...
+- O segundo link lhe direciona para este repositório :smile:
+- O terceiro link, refere-se a licença Apache.
+
+Para interagir com a API através do Swagger UI, clique em um dos endpoints e clique em "Try it Out" (alguns endpoints possuem descrições mais assertivas).
+<img src="Arquivos/img/swagger/Swagger-transacao-descricao.jpg"></img>
+
+Adicione as informações necessárias e clique em "Execute".
+<img src="Arquivos/img/swagger/Swagger-transacao-TryItOut.jpg"></img>
+
+Prontinho !! Você interagiu com a nossa API. :smile: :partying_face:	
+
+Cada endpoint possui um conjunto de códigos do status de retorno.
+<img src="Arquivos/img/swagger/Swagger-transacao-codes.jpg"></img>
+
+Caso não tenha ficado claro, você pode acessar esses links para sanar suas dúvidas:
+- <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status">Códigos de status de respostas HTTP</a>
+- <a href="https://medium.com/@thiagogrespi/testes-de-api-parte-1-entendendo-e-botando-a-m%C3%A3o-na-massa-com-postman-b365923b83e1">Testes de API</a>
 
 <h3 id="postman">Postman</h3>
-Essa seção encontra-se em desenvolvimento.
+O Postman é uma ferramenta utilizada para análisar,testar e desenvolver APIs REST por meio do envio de requisições HTTP, você pode consumir serviços de APIs locais ou da internet. Para mais informações sobre a ferramenta veja: <a href="https://enotas.com.br/blog/postman/">O que é o Postman?</a> e <a href="https://www.devmedia.com.br/testando-apis-web-com-o-postman/37264">Testando APIs Web com o Postman</a>.
 
-<h3 id="swagger">Swagger</h3>
-Essa seção encontra-se em desenvolvimento.
+Em seguida, iremos mostrar como fazer requisições na nossa API utilizando o Postman. 
+- Primeiro, importe os <a href="Arquivos/json">arquivos</a> gerados pelo <a href="#swagger">Swagger</a>.
+	- Abra o Postman, clique em `File` -> `Import` -> `File` -> `Upload files`. 
+<img src="Arquivos/img/postman/Postman-import.jpg"></img>
+
+	- Informe os arquivos que serão importados e depois clique em `Import`.
+<img src="Arquivos/img/postman/Postman-import2.jpg"></img>
+
+	- Depois de importar o arquivo, clique em `Colections`.
+<img src="Arquivos/img/postman/Postman-api.jpg"></img>
+
+	- Agora precisamos modificar nossa váriavel de ambiente. Selecione a collection destacada em laranja -> Clique em "Variables" -> Mude o valor de "Current Value" para `localhost:8101`. Para salvar clique nos 3 pontinhos destacados acima de "Variables" e depois clique em "Save". Repita o processo para a segunda collection, mudando o valor para `localhost:8102`.
+<img src="Arquivos/img/postman/Postman-variaveisDeAmbiente.jpg"></img>
+
+	- Prontinho !! A partir daqui você consegue testar a nossa API ! Para isso, escolha uma das requisições e clique em `Send` :smile:.
+<img src="Arquivos/img/postman/Postman-requisicao1.jpg"></img>
+
+	- Algumas requisições do tipo "GET" e `PUT`exigem que você informe algum parâmetro na URL.<br>Substitua os parâmetros indicados por `:` pelos valores reais. Nesse caso o parâmetro era `:numeroConta`.
+<img src="Arquivos/img/postman/Postman-requisicao2.jpg"></img>
+
+	- Lembre-se que em requisições do tipo `POST` e `PUT` os valores são inseridos no corpo JSON.<br>Para isso, clique em `Body` -> `Raw` -> `JSON`. Agora é só substituir os valores !
+<img src="Arquivos/img/postman/Postman-requisicao3.jpg"></img>
+
+A seção de <a href="#endpoints">Endpoints</a> e a documentação do <a href="#swagger">Swagger</a> podem ser suas aliadas aqui :grin:.
+Você também acessar a documentação do Postman <a href="https://learning.postman.com/docs/getting-started/introduction/">aqui</a>.
 
 <p align="right"><a href="#topo">Você pode voltar ao topo clicando aqui ↑</a></p>
 <h1 id="desenvolvimento" align="center">Desenvolvimento</h1>
