@@ -31,8 +31,13 @@ public class ContaService {
                 .orElse(ResponseEntity.notFound().build());
 	}
 	
-	public ContaModel getByCpf(String cpf) {
-		return contaRepository.procuraPorCpf(cpf);
+	public ContaModel getByCpf(String cpf) throws Exception {
+		if(contaRepository.procuraPorCpf(cpf) != null) {
+			return contaRepository.procuraPorCpf(cpf);
+		}
+		else {
+			throw new Exception("Conta não identificada.");
+		}
 	}
 	
 	public ContaModel mudaSaldo(String numero, String acao, String valor) {
@@ -62,6 +67,5 @@ public class ContaService {
 	    String generatedString = buffer.toString();
 
 	    return generatedString;
-	}
-	
+	}	
 }

@@ -32,11 +32,11 @@ public class ClienteService {
                 .orElse(ResponseEntity.notFound().build());
 	}
 	
-	public ClienteModel update(String cpf, ClienteModel cliente) {
+	public ClienteModel update(String cpf, ClienteModel cliente) throws Exception {
 		ClienteModel clienteAtualizado = getByCpf(cpf).getBody();
 		
 		if (clienteAtualizado == null) {
-			return null;
+			throw new Exception("Cliente não identificado.");
 		}
 		
 		clienteAtualizado.setDataNascimento(cliente.getDataNascimento());
@@ -50,10 +50,13 @@ public class ClienteService {
 		return clienteRepository.save(clienteAtualizado);
 	}
 	
-	public void delete(String cpf) {
+	public void delete(String cpf) throws Exception {
 		ClienteModel cliente = getByCpf(cpf).getBody();
-		clienteRepository.delete(cliente);
-	}
-	
 
+		if (cliente != null) {
+			clienteRepository.delete(cliente);
+		} else {
+			throw new Exception("Cliente não identificado.");
+		}
+	}
 }

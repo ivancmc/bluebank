@@ -20,12 +20,20 @@ public class TransacaoService {
 	@Autowired
 	private TransacaoRepository transacaoRepository;
 
-	public List<TransacaoModel> extrato(String numeroConta) {
-		return transacaoRepository.getByConta(numeroConta);
+	public List<TransacaoModel> extrato(String numeroConta) throws Exception {
+		if (! transacaoRepository.getByConta(numeroConta).isEmpty()) {
+			return transacaoRepository.getByConta(numeroConta);
+		} else {
+			throw new Exception("Não há registros de transações com a conta bancária informada.");
+		}
 	}
 
-	public List<TransacaoModel> extratoPorMes(String numeroConta, String mes, String ano) {
-		return transacaoRepository.getByMes(numeroConta, mes, ano);
+	public List<TransacaoModel> extratoPorMes(String numeroConta, String mes, String ano) throws Exception {
+		if (! transacaoRepository.getByMes(numeroConta, mes, ano).isEmpty()) {
+			return transacaoRepository.getByMes(numeroConta, mes, ano);
+		} else {
+			throw new Exception("Durante esse período, não há registros de transações com a conta bancária informada.");
+		}
 	}
 
 	public TransacaoModel deposito(TransacaoModel transacao) throws Exception {

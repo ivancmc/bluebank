@@ -3,7 +3,7 @@ package com.squad.dezktop.repository;
 public enum TipoTransacao 
 {
 	TED(1, "TED"), DOC(2, "DOC"), PIX(3, "Pix"), SAQUE(4, "Saque"),
-	DEPOSITO(5, "Deposito"), PAGAMENTO(6, "Pagamento");
+	DEPOSITO(5, "Deposito"), PAGAMENTO(6, "Pagamento"), TRANSFERENCIA(7, "Transferencia");
 	
 	private int cod;
 	private String nome;

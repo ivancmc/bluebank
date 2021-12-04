@@ -18,27 +18,28 @@ public class AgendamentoService {
 
 	@Autowired
 	private AgendamentoRepository agendamentoRepository;
-	
 
-	public List<TransacaoModel> efetuarAgendamento() throws Exception {		
+	public List<TransacaoModel> efetuarAgendamento() throws Exception {
 
 		Date hoje = new Date(System.currentTimeMillis());
-		
 		DateFormat f = DateFormat.getDateInstance(DateFormat.SHORT);
-		
-		List<AgendamentoModel> agendamentos = agendamentoRepository.getByAgendamento(f.format(hoje).replace("-", "/"));
-		
-		List <TransacaoModel> transacoes = new ArrayList<>();	
 
-		for(AgendamentoModel agendamento : agendamentos) {	
-			agendamento.getTransacao().setAgendamento(null);
-			if (agendamento.getTransacao().getContaExterna() != null) {
-				agendamento.getTransacao().getContaExterna().setId(null);
-			}			
-			agendamentoRepository.deleteById(agendamento.getId());	
-			transacoes.addAll(transacaoService.transferencia(agendamento.getTransacao()));
+		List<AgendamentoModel> agendamentos = agendamentoRepository.getByAgendamento(f.format(hoje).replace("-", "/"));
+		List<TransacaoModel> transacoes = new ArrayList<>();
+
+		if (!agendamentos.isEmpty()) {
+			for (AgendamentoModel agendamento : agendamentos) {
+				agendamento.getTransacao().setAgendamento(null);
+				if (agendamento.getTransacao().getContaExterna() != null) {
+					agendamento.getTransacao().getContaExterna().setId(null);
+				}
+				agendamentoRepository.deleteById(agendamento.getId());
+				transacoes.addAll(transacaoService.transferencia(agendamento.getTransacao()));
+			}
+
+			return transacoes;
+		} else {
+			throw new Exception("Não há agendamentos para hoje.");
 		}
-		
-		return transacoes;
 	}
 }

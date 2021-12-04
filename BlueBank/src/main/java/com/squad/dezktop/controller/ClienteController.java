@@ -18,6 +18,10 @@ import com.squad.dezktop.model.ClienteModel;
 import com.squad.dezktop.service.ClienteService;
 import com.squad.dezktop.service.ContaService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = "Cliente", description = " ")
 @RestController
 @RequestMapping
 public class ClienteController {
@@ -27,18 +31,21 @@ public class ClienteController {
 	@Autowired
 	ContaService contaService;
 
-	@GetMapping("clientes")
+	@ApiOperation(value = "Retorna uma lista com todos os clientes.")
+	@GetMapping(value = "clientes", produces = "application/json")
 	public ResponseEntity<List<ClienteModel>> getAll() {
 		return ResponseEntity.ok(clienteService.getAll());
 	}
 
-	@PostMapping("cliente")
+	@ApiOperation(value = "Cadastra um novo cliente.", notes = "Para cadastrar um novo cliente é necessário inserir algumas informações pessoais como: \n- Nome completo, endereço, número de telefone, data de nascimento, CPF, RG, email e senha."
+			+ "\n- Os dados bancários são gerados automaticamente.")
+	@PostMapping(value = "cliente", produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> post(@RequestBody ClienteModel cliente) {
 		try {
 			if (clienteService.getByCpf(cliente.getCpf()).getStatusCode().equals(HttpStatus.NOT_FOUND)) {
 				return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
 			} else {
-				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<>("Não foi possível criar o cliente, verifique os dados.",
@@ -46,20 +53,31 @@ public class ClienteController {
 		}
 	}
 
-	@GetMapping(value = "cliente/{cpf}")
+	@ApiOperation(value = "Retorna um cliente.")
+	@GetMapping(value = "cliente/{cpf}", produces = "application/json")
 	public ResponseEntity<ClienteModel> getByCpf(@PathVariable String cpf) {
 		return clienteService.getByCpf(cpf);
 	}
 
-	@DeleteMapping(value = "cliente/{cpf}")
+	@ApiOperation(value = "Deleta um cliente.")
+	@DeleteMapping(value = "cliente/{cpf}", produces = "application/json")
 	public ResponseEntity<Object> delete(@PathVariable String cpf) {
-		clienteService.delete(cpf);
-		return new ResponseEntity<>("Cliente deletado com sucesso.", HttpStatus.OK);
+		try {
+			clienteService.delete(cpf);
+			return new ResponseEntity<>("Cliente deletado com sucesso.", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
 
-	@PutMapping(value = "cliente/{cpf}")
+	@ApiOperation(value = "Atualiza os dados de um cliente.", notes = "Para atualizar os dados do cliente é necessário inserir o número de CPF no campo indicado.\n"
+			+ "\n- Não é possível alterar o CPF ou os dados bancários.")
+	@PutMapping(value = "cliente/{cpf}", produces = "application/json", consumes = "application/json")
 	public ResponseEntity<ClienteModel> update(@PathVariable String cpf, @RequestBody ClienteModel cliente) {
-		return ResponseEntity.ok().body(clienteService.update(cpf, cliente));
+		try {
+			return ResponseEntity.ok().body(clienteService.update(cpf, cliente));
+		} catch (Exception e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
-
 }
