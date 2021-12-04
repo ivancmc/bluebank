@@ -21,18 +21,11 @@ public class AgendamentoService {
 
 	public List<TransacaoModel> efetuarAgendamento() throws Exception {
 
-		//Date hoje = new Date(System.currentTimeMillis());
-		//DateFormat f = DateFormat.getDateInstance(DateFormat.SHORT);
-		//System.out.println(f.format(hoje).replace("-", "/"));
-		
 		Date hoje = new Date();
-      		DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
-      		Locale BRAZIL = new Locale("pt","BR");      
-      		df = DateFormat.getDateInstance(DateFormat.SHORT, BRAZIL);
-		
-		System.out.println(df.format(hoje));
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Locale BRAZIL = new Locale("pt", "BR");
+		df = DateFormat.getDateInstance(DateFormat.SHORT, BRAZIL);
 
-		//List<AgendamentoModel> agendamentos = agendamentoRepository.getByAgendamento(f.format(hoje).replace("-", "/"));
 		List<AgendamentoModel> agendamentos = agendamentoRepository.getByAgendamento(df.format(hoje));
 		List<TransacaoModel> transacoes = new ArrayList<>();
 
