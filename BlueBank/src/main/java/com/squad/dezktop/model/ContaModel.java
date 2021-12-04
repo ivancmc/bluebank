@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,8 +16,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ContaModel 
 {
 	@Id
+	@Size(min = 10, max = 10)
 	private String numeroConta;
+
+	@Size(min = 4, max = 6)
 	private String agencia;
+	
 	private BigDecimal saldo;
 
 	@JsonIgnore

@@ -50,7 +50,7 @@ public class TransacaoController
 		}
 	}
 
-	@PostMapping({"transferencia", "pagamento"})
+	@PostMapping("transacao")
 	public ResponseEntity<List<TransacaoModel>> transferencia (@RequestBody TransacaoModel transacao){
 		try {
 			List<TransacaoModel> transacoes = transacaoService.transferencia(transacao);

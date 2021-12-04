@@ -1,7 +1,6 @@
 package com.squad.dezktop.model;
 
-import java.sql.Date;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -20,13 +17,11 @@ public class AgendamentoModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
-	//@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/New_York")
 	
-	private Date data;
+	private String data;
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "transacao_id", referencedColumnName = "id")
 	private TransacaoModel transacao;
 
@@ -39,11 +34,11 @@ public class AgendamentoModel {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data ;
 	}
 
