@@ -23,6 +23,7 @@ public class AgendamentoService {
 
 		Date hoje = new Date(System.currentTimeMillis());
 		DateFormat f = DateFormat.getDateInstance(DateFormat.SHORT);
+		System.out.println(f.format(hoje).replace("-", "/"));
 
 		List<AgendamentoModel> agendamentos = agendamentoRepository.getByAgendamento(f.format(hoje).replace("-", "/"));
 		List<TransacaoModel> transacoes = new ArrayList<>();
