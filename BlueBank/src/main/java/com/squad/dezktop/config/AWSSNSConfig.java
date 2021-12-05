@@ -12,13 +12,9 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class AWSSNSConfig {
 
-	// Ana
 	public static final String ACCESS_KEY = "AKIA6BZRT7L4YR72JVVZ";
 	public static final String SECRET_KEY = "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";
 	
-//	public static final String SECRET_KEY = "AKIA6BZRT7L4ZKEEEO5K";
-//	public static final String ACCESS_KEY = "pTqPnN2kGFxrT8gteWa89olynqj5yReEdjTT46xj";
-
 	@Primary
 	@Bean
 	public AmazonSNSClient getSnsClient() {
