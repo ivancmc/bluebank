@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.model.PublishRequest;
+import com.amazonaws.services.sns.model.SubscribeRequest;
 import com.squad.dezktop.model.ClienteModel;
 import com.squad.dezktop.service.ClienteService;
 import com.squad.dezktop.service.ContaService;
@@ -31,6 +34,11 @@ public class ClienteController {
 	@Autowired
 	ContaService contaService;
 
+	@Autowired
+	private AmazonSNSClient snsClient;
+
+	String TOPIC_ARN = "arn:aws:sns:us-east-1:965934840569:dezktop_sns";
+
 	@ApiOperation(value = "Retorna uma lista com todos os clientes.")
 	@GetMapping(value = "clientes", produces = "application/json")
 	public ResponseEntity<List<ClienteModel>> getAll() {
@@ -43,7 +51,9 @@ public class ClienteController {
 	public ResponseEntity<Object> post(@RequestBody ClienteModel cliente) {
 		try {
 			if (clienteService.getByCpf(cliente.getCpf()).getStatusCode().equals(HttpStatus.NOT_FOUND)) {
-				return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
+				ResponseEntity<Object> resposta = ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
+				inscrever(cliente.getEmail());
+				return resposta;
 			} else {
 				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.UNAUTHORIZED);
 			}
@@ -79,5 +89,25 @@ public class ClienteController {
 		} catch (Exception e) {
 			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@ApiOperation(value = "Inscreve o email no tópico de notificações.")
+	@GetMapping("/inscrever/{email}")
+	public String inscrever(@PathVariable String email) {
+		SubscribeRequest request = new SubscribeRequest(TOPIC_ARN, "email", email);
+		snsClient.subscribe(request);
+		return "Inscrição pendente. Para confirmar a inscrição na lista, verifique seu email : " + email;
+	}
+
+	@ApiOperation(value = "Envia o email de boas vindas para o tópico de notificações.")
+	@GetMapping("/notificar")
+	public String notificarParaTopico() {
+		PublishRequest publishRequest = new PublishRequest(TOPIC_ARN, montarEmail(), "BlueBank: vai lá e PAN!");
+		snsClient.publish(publishRequest);
+		return "Notificação enviada com sucesso!";
+	}
+
+	private String montarEmail() {
+		return "Caro Cliente,\n" + "\n" + "Seja bem-vindo ao Blue Bank!" + "\n";
 	}
 }

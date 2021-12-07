@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.aws.autoconfigure.context.ContextRegionProviderAutoConfiguration;
+import org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import com.squad.dezktop.model.ClienteModel;
 import com.squad.dezktop.service.ClienteService;
 import com.squad.dezktop.service.ContaService;
-@SpringBootApplication
+@SpringBootApplication (exclude = {ContextStackAutoConfiguration.class, ContextRegionProviderAutoConfiguration.class})
 @EnableEurekaClient
 public class BlueBankApplication implements CommandLineRunner {
 	@Autowired
