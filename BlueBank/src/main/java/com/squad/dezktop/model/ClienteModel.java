@@ -1,7 +1,6 @@
 package com.squad.dezktop.model;
 
 import java.sql.Date;
-import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
