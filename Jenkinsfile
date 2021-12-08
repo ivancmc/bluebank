@@ -10,7 +10,7 @@ node {
         }
         stage('Build Cliente-Conta') {
             dir ('BlueBank') {
-                sh 'mvn clean install'
+                sh 'mvn clean install -DskipTests'
             }
         }
         stage('Build Transações') {
