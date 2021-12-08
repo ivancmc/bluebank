@@ -13,15 +13,20 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
         <li><a href="#RQFuncionais">Requisitos Funcionais</a></li>
         <li><a href="#endpoints">Endpoints</a></li>
         <ul>
-            <li><a href="#postman">Postman</a></li>
             <li><a href="#swagger">Swagger</a></li>
+			<li><a href="#postman">Postman</a></li>
         </ul>
     </ul>
-    <li><a href="#desenvolvimento">Processo de Desenvolvimento</a></li>
+	<li><a href="#desenvolvimento">Desenvolvimento</a></li>
     <ul>
-        <li><a href="#jira">Quadro Kanban</a></li>
-        <li><a href="#testes">Execução dos Testes</a></li>
-    </ul>
+		<li><a href="#jira">Quadro Kanban</a></li>
+		<li><a href="#testes">Execução dos Testes</a></li>
+		<li><a href="#aws">AWS</a></li>
+		<ul>
+			<li><a href="#deploy">Estratégia de Deploy</a></li>
+			<li><a href="#servicos">Serviços Utilizados</a></li>
+		</ul>
+	</ul>
     <li><a href="#tecnologias">Tecnologias e Ferramentas</a></li>
     <li><a href="#licenca">Licença</a></li>
     <li><a href="#agradecimentos">Agradecimentos</a></li>
@@ -31,12 +36,12 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 <h1 align="center" id="requisitos">Requisitos e Funcionalidades</h1>
 <h3 id="RQEntrega">Requisitos de Entrega</h3>
 
-- [ ] O código deve ser entregue em um repositório no Github.
-- [ ] A API deve ser disponibilizada em ambiente AWS com EC2 e em Beanstalk.
-- [ ] A aplicação deve ter um pipeline em Jenkins ou no Aws Build.
-- [ ] A aplicação precisa ser configurada no API Gateway da AWS.
-- [ ] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática.
-- [ ] A aplicação precisa ter no mínimo um Lambda.
+- [X] O código deve ser entregue em um repositório no Github.
+- [X] A API deve ser disponibilizada em ambiente AWS com EC2 e em Beanstalk.
+- [X] A aplicação deve ter um pipeline em Jenkins ou no Aws Build.
+- [X] A aplicação precisa ser configurada no API Gateway da AWS.
+- [X] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática.
+- [X] A aplicação precisa ter no mínimo um Lambda.
 - [X] Liste os endpoints no README.md
 - [ ] O Banco deve ser entregue em script SQL junto ao repositório.
 
@@ -69,6 +74,14 @@ Os <b>endpoints</b> são literalmente pontas de um canal de comunicação. Neste
 ***[GET]*** Pesquisa um cliente pelo CPF:
 ```
 /cliente/{cpf}
+```
+***[GET]*** Inscreve o email no tópico de notificações. É chamado no momento de criação do cliente:
+```
+/inscrever/{email}
+```
+***[GET]*** Envia o email de boas vindas para o tópico de notificações:
+```
+/notificar
 ```
 ***[POST]*** Cadastra um novo cliente:
 ```
@@ -139,7 +152,11 @@ Os <b>endpoints</b> são literalmente pontas de um canal de comunicação. Neste
 ```
 <h3 id="swagger">Swagger</h3>
 O <a href="https://swagger.io/">Swagger(OpenAPI)</a> é uma especificação aberta para definição/descrição de APIs REST. Você pode achar mais informações sobre o Swagger <a href="https://www.ibm.com/docs/pt-br/integration-bus/10.0?topic=ssmkhh-10-0-0-com-ibm-etools-mft-doc-bi12018--htm">aqui</a> e pode testar uma demonstração ao vivo do Swagger aqui: <a href="https://petstore.swagger.io/">Swagger Petstore</a>.<br>
-Utilizamos o <a href="https://github.com/swagger-api/swagger-ui">Swagger UI</a> para documentar, visualizar e requisitar/acessar a nossa API em um navegador Web.
+Utilizamos o <a href="https://github.com/swagger-api/swagger-ui">Swagger UI</a> para documentar, visualizar e requisitar/acessar a nossa API em um navegador Web. <br>
+Para acessar localmente, utilize a URL:
+
+`http://localhost:8101/swagger-ui.html` 	 e 		`http://localhost:8102/swagger-ui.html`
+
 <h4 align="center">Microsserviços de clientes e contas</h4>
 <img src="Arquivos/img/swagger/Swagger-cliente.jpg"></img>
 <img src="Arquivos/img/swagger/Swagger-conta.jpg"></img>
@@ -222,15 +239,26 @@ Note que:
 E por último, todas as tarefas e histórias estão vinculadas ao épico **_"Eu enquanto cliente gostaria de abrir uma conta no banco para que eu possa efetuar transações financeiras"_**
 <img src="Arquivos/img/jira/BBP_Roteiro.png" alt="epico"></img>
 
-<h2 id="testes">Execução dos Testes</h2>
-Criação dos testes, utilizamos JUnit
-Essa sessão encontra-se em andamento.
+<h3 id="testes">Execução dos Testes</h3>
+Fizemos alguns testes unitários relacionados ao CRUD de clientes e ao processo de creditar e debitar saldo de contas, contido no primeiro microsserviço. Você pode ver o código dos testes, clicando <a href="bluebank/BlueBank/src/test/java/com/squad/dezktop/service/">aqui</a>.
 
-<h3 id="resultados">Análise dos Resultados</h3>
-Essa sessão encontra-se em andamento.
+<h2 id="aws">AWS</h2>
+<h3 id="servicos">Serviços Utilizados</h3>
+O Jenkins foi instalado numa <a href="https://aws.amazon.com/pt/ec2/">instância EC2</a> e cria toda a aplicação através do arquivo <a href="Jenkinsfile">Jenksfile</a> existente no diretório raiz do projeto no github.
+Configuramos todos os endpoints no <a href="https://aws.amazon.com/pt/api-gateway/">API Gateway</a>, importando as documentações das APIs do Swagger e mapeando os endpoints de cada microsserviço.
+Criamos uma função <a href="https://aws.amazon.com/pt/lambda/">Lambda</a> em NodeJs para fazer um request no endpoint /agendamento/efetivar que é acionada por um gatilho no <a href="https://aws.amazon.com/pt/eventbridge/">Event Bridge</a> definido para executar de segunda à sexta às 8 horas da manhã.
+Ao executar a função Lambda todas as transações agendadas na aplicação são efetivadas e podemos ver o resultado através do log do <a href="https://aws.amazon.com/pt/cloudwatch/">Cloud Watch</a>.
+Como requisito do projeto, também implementamos dois endpoints para se comunicarem com o serviço  <a href="https://aws.amazon.com/pt/sns/">SNS da AWS</a>.
+O endpoint /inscrever/{email} faz a inscrição do email passado como parâmetro no tópico de notificações.
+O endpoint /notificar envia um email de boas-vindas para todos os emails inscritos no tópico de notificações.
+
+
+<h3 id="deploy">Estratégia de Deploy</h3>
+Criamos uma pipeline no <a href="https://www.jenkins.io/download/">Jenkins</a> que é acionada a partir de qualquer commit na branch main do repositório do projeto no github.
+A pipelene faz o checkout do projeto através do git, faz o build das aplicações java (eureka-server, cliente-conta e transacoes) e executa o docker-compose, lendo o arquivo <a href="docker-compose.yml">docker-compose.yml</a>, para fazer o build e executar um container para cada aplicação java (através de seus respectivos Dockerfile), além de criar um container de banco de dados em <a href="https://www.mysql.com/">MySQL</a> que será utilizado pela aplicação.
 
 <p align="right"><a href="#topo">Você pode voltar ao topo clicando aqui ↑</a></p>
-<h3 class="subTitulo" id="tecnologias">Ferramentas e tecnologias utilizadas</h3>
+<h3 id="tecnologias">Ferramentas e tecnologias utilizadas</h3>
 <div id="tecnologias" style="display: inline_block" align="center"><br>
     <a href="https://www.oracle.com/br/java/technologies/javase/jdk11-archive-downloads.html">
         <img align="center" alt="Java" title="Java SE 11" height="80px" width="90px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-plain.svg"/>
@@ -241,8 +269,24 @@ Essa sessão encontra-se em andamento.
     <a href="https://www.mysql.com/">
         <img align="center" alt="MySql" title="MySql" height="80px" width="90" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"/>
     </a>
-    <a href="https://aws.amazon.com/pt/?nc2=h_lg">
-        <img align="center" alt="AWS" title="Amazom Web Services (AWS)" height="80px" width="90px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"/>
+    <a href="https://aws.amazon.com/pt/sns/">
+        <img align="center" alt="SNS" title="AWS - SNS" height="80px" width="80px" src="Arquivos/img/aws-sns.png"/>
+    </a>
+   <a href="https://aws.amazon.com/pt/lambda/">
+        <img align="center" alt="AWS - Lambda" title="AWS - Lambda" height="80px" width="80px" src="Arquivos/img/aws-lambda.png"/>
+    </a>
+    <a href="https://aws.amazon.com/pt/api-gateway/">
+        <img align="center" alt="AWS - API Gateway" title="AWS - API Gateway" height="80px" width="80px" src="Arquivos/img/aws-api_gateway.png"/>
+    </a>
+   <a href="https://aws.amazon.com/pt/ec2/">
+        <img align="center" alt="AWS - EC2" title="AWS - EC2" height="80px" width="80px" src="Arquivos/img/aws-ec2.png"/>
+    </a>
+	<a href="https://aws.amazon.com/pt/eventbridge/">
+        <img align="center" alt="AWS - Event Bridge" title="AWS - Event Bridge" height="80px" width="80px" src="Arquivos/img/aws-event_bridge.png"/>
+    </a>
+    </a>
+	<a href="https://aws.amazon.com/pt/eventbridge/">
+        <img align="center" alt="AWS - Cloud Watch" title="AWS - Cloud Watch" height="80px" width="90px" src="Arquivos/img/aws-cloud_Watch.png"/>
     </a>
     <a href="https://www.docker.com/get-started">
     <img align="center" alt="Docker" title="Docker" height="90px" width="100px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"/> 
