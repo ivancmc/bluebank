@@ -51,9 +51,7 @@ public class ClienteController {
 	public ResponseEntity<Object> post(@RequestBody ClienteModel cliente) {
 		try {
 			if (clienteService.getByCpf(cliente.getCpf()).getStatusCode().equals(HttpStatus.NOT_FOUND)) {
-				ResponseEntity<Object> resposta = ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
-				inscrever(cliente.getEmail());
-				return resposta;
+				return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
 			} else {
 				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.UNAUTHORIZED);
 			}
