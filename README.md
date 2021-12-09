@@ -255,7 +255,7 @@ O endpoint /notificar envia um email de boas-vindas para todos os emails inscrit
 
 <h3 id="deploy">Estratégia de Deploy</h3>
 Criamos uma pipeline no <a href="https://www.jenkins.io/download/">Jenkins</a> que é acionada a partir de qualquer commit na branch main do repositório do projeto no github.
-A pipelene faz o checkout do projeto através do git, faz o build das aplicações java (eureka-server, cliente-conta e transacoes) e executa o docker-compose, lendo o arquivo <a href="docker-compose.yml">docker-compose.yml</a>, para fazer o build e executar um container para cada aplicação java (através de seus respectivos Dockerfile), além de criar um container de banco de dados em <a href="https://www.mysql.com/">MySQL</a> que será utilizado pela aplicação.
+A pipeline faz o checkout do projeto através do git, faz o build das aplicações java (eureka-server, cliente-conta e transacoes) e executa o docker-compose, lendo o arquivo <a href="docker-compose.yml">docker-compose.yml</a>, para fazer o build e executar um container para cada aplicação java (através de seus respectivos Dockerfile), além de criar um container de banco de dados em <a href="https://www.mysql.com/">MySQL</a> que será utilizado pela aplicação.
 
 <p align="right"><a href="#topo">Você pode voltar ao topo clicando aqui ↑</a></p>
 <h3 id="tecnologias">Ferramentas e tecnologias utilizadas</h3>
