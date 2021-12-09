@@ -1,0 +1,49 @@
+Preparação do ambiente do EC2 para executar a pipeline de deploy no Jenkins e subir a aplicação:
+
+1- Logar no EC2 por SSH utilizando o par de chaves de acesso gerada na criação da instância;
+
+2- Instalar e iniciar o docker:
+
+sudo amazon-linux-extras install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $(whoami)
+sudo chmod 666 /var/run/docker.sock
+
+3- Instalar o docker-compose:
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /bin/docker-compose
+sudo chmod +x /bin/docker-compose
+
+4- Instalar o java 11:
+
+sudo amazon-linux-extras install epel -y 
+sudo yum update -y
+sudo yum install java-11-amazon-corretto.x86_64 -y
+
+5- Instalar o git:
+
+sudo yum install git -y
+
+6- Instalar e iniciar o jenkins:
+
+sudo yum install jenkins
+sudo service jenkins start
+
+7- Acessar o jenkins no navegador através do endereço http://[host_ou_IP]:8080
+
+8- Obter a senha de admin inicial do jenkins:
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+9- Instalar os plugins recomendados no jenkins;
+
+10- Instalar plugin "Pipeline Maven Integration" no jenkins;
+
+11- Definir a instalação do maven com nome "maven" para obter através do apache;
+
+12- Criar um job do tipo pipeline;
+
+13- Configurar a pipeline na opção "Pipeline script from SCM" e definir o repositório do git e o "script path" Jenksfile.
+
+14- Executar o job.
