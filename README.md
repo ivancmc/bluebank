@@ -1,5 +1,5 @@
 <img src="Arquivos/img/logo.png"  alt="Logo Bluebank" title="Logo Bluebank"></img>
-<h1 align="center" id="topo">Olá, seja bem vindo(a) a API Bluebank</h1>
+<h1 align="center" id="topo">Olá, seja bem vindo(a) à API Bluebank</h1>
 Esse projeto consiste em uma API para gerenciar as transações de um banco fictício utilizando Java, MySQL e AWS. Efetuamos a aplicação por meio de Spring Boot, usando Maven com CRUD e dividimos as funções em microserviços. Para o banco de dados utilizamos o MySql com deploy no Docker e pipeline em Jenkins, e por fim, fizemos uso da AWS como servidor para manter a aplicação por meio da instância EC2.
 
 <h3>Sumário</h3>
