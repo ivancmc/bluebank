@@ -1,7 +1,7 @@
 node {
     withMaven(maven:'maven') {
         stage('Checkout') {
-            git url: 'https://github.com/ivancmc/bluebank.git', branch: 'develop'
+            git url: 'https://github.com/ivancmc/bluebank.git', branch: 'main'
         }
         stage('Build Eureka') {
             dir ('Servidor-Eureka') {
