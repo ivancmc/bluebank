@@ -16,10 +16,10 @@ function httprequest() {
             method: 'GET'
         };
         const req = https.request(options, (res) => {
-            if(res.statusCode == 404){
-                console.log('NÃO HÁ AGENDAMENTOS.');
-            }
-            if (res.statusCode != 200 || res.statusCode != 404) {
+            if (res.statusCode < 200 || res.statusCode >= 300) {
+                if(res.statusCode == 404){
+                    console.log('NÃO HÁ AGENDAMENTOS.');
+                }
                 return reject(new Error('statusCode=' + res.statusCode));
             }
             var body = [];
