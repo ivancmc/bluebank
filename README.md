@@ -41,9 +41,9 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 - [X] A aplicação deve ter um pipeline em Jenkins ou no Aws Build.
 - [X] A aplicação precisa ser configurada no API Gateway da AWS.
 - [X] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática.
-- [X] A aplicação precisa ter no mínimo um Lambda.
+- [X] A aplicação precisa ter no mínimo um Lambda. <a href="Arquivos/Lambda_function.js">Clique aqui para acessar.</a>
+- [X] O Banco deve ser entregue em script SQL junto ao repositório. <a href="Arquivos/Script-SQL">Clique aqui para acessar.</a>
 - [X] Liste os endpoints no README.md
-- [ ] O Banco deve ser entregue em script SQL junto ao repositório.
 
 <h3 id="RQFuncionais">Requisitos Funcionais</h3>
 Os requisitos funcionais desta API giram em torno de um CRUD entre clientes e suas respectivas contas bancárias, logo, este sistema possibilita:
@@ -53,6 +53,8 @@ Os requisitos funcionais desta API giram em torno de um CRUD entre clientes e su
 - A atualização de dados dos clientes.
 - A exclusão de um cliente, e consequentemente de sua conta bancária.
 - O histórico de transações entre contas.
+- Efetuação de saques e depósitos.
+- Efetuação de transações externas ou internas -TED, PIX, DOC, pagamentos ou transferências- agendadas ou não. 
 
 <h3 id="endpoints">Endpoints</h3>
 Os <b>endpoints</b> são literalmente pontas de um canal de comunicação. Neste caso em específico, o endpoint é uma das pontas da nossa API Bluebank, e por sua vez, essa API pode ser acessada/requisitada por uma URL que executa uma certa função quando chamada. Sendo assim, cada endpoint listado abaixo, executa um determinado trecho de código.
@@ -197,16 +199,16 @@ Em seguida, iremos mostrar como fazer requisições na nossa API utilizando o Po
 	- Depois de importar o arquivo, clique em `Colections`.
 <img src="Arquivos/img/postman/Postman-api.jpg"></img>
 
-	- Agora precisamos modificar nossa váriavel de ambiente. Selecione a collection destacada em laranja -> Clique em "Variables" -> Mude o valor de "Current Value" para `localhost:8101`. Para salvar clique nos 3 pontinhos destacados acima de "Variables" e depois clique em "Save". Repita o processo para a segunda collection, mudando o valor para `localhost:8102`.
+	- Agora precisamos modificar nossa váriavel de ambiente. Selecione a collection destacada em laranja -> Clique em "Variables" -> Mude o valor de "Current Value" para `localhost:8101`.<br>Para salvar clique nos 3 pontinhos destacados acima de "Variables" e depois clique em "Save". Repita o processo para a segunda collection, mudando o valor para `localhost:8102`.
 <img src="Arquivos/img/postman/Postman-variaveisDeAmbiente.jpg"></img>
 
 	- Prontinho !! A partir daqui você consegue testar a nossa API ! Para isso, escolha uma das requisições e clique em `Send` :smile:.
 <img src="Arquivos/img/postman/Postman-requisicao1.jpg"></img>
 
-	- Algumas requisições do tipo "GET" e `PUT`exigem que você informe algum parâmetro na URL.<br>Substitua os parâmetros indicados por `:` pelos valores reais. Nesse caso o parâmetro era `:numeroConta`.
+	- Algumas requisições do tipo "GET" e `PUT`exigem que você informe algum parâmetro na URL.<br>Substitua os parâmetros indicados por `:` pelos valores reais.<bR>Nesse caso o parâmetro era `:numeroConta`.
 <img src="Arquivos/img/postman/Postman-requisicao2.jpg"></img>
 
-	- Lembre-se que em requisições do tipo `POST` e `PUT` os valores são inseridos no corpo JSON.<br>Para isso, clique em `Body` -> `Raw` -> `JSON`. Agora é só substituir os valores !
+	- Lembre-se que em requisições do tipo `POST` e `PUT` os valores são inseridos no corpo JSON.<br>Para isso, clique em `Body` -> `Raw` -> `JSON`.<br>Agora é só substituir os valores !
 <img src="Arquivos/img/postman/Postman-requisicao3.jpg"></img>
 
 A seção de <a href="#endpoints">Endpoints</a> e a documentação do <a href="#swagger">Swagger</a> podem ser suas aliadas aqui :grin:.
