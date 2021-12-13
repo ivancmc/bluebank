@@ -38,6 +38,10 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
     <li><a href="#squad">Squad DezKTop</a></li>
 </ul>
 
+<h1 align="center" id="apresentacao">Apresentação</h1>
+Hey !! Agradecemos o seu interesse no nosso projeto 😃.<br>Preparamos um gif para você dar uma olhadinha no funcionamento da nossa API !<br>
+<img src="Arquivos/Apresentacao/Bluebank.gif"></img>
+
 <h1 align="center" id="requisitos">Requisitos e Funcionalidades</h1>
 <h3 id="RQEntrega">Requisitos de Entrega</h3>
 
