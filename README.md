@@ -39,10 +39,10 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 - [X] O código deve ser entregue em um repositório no Github.
 - [X] A API deve ser disponibilizada em ambiente AWS com EC2 e em Beanstalk.
 - [X] A aplicação deve ter um pipeline em Jenkins ou no Aws Build.
-- [X] A aplicação precisa ser configurada no API Gateway da AWS.
-- [X] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática.
-- [X] A aplicação precisa ter no mínimo um Lambda. <a href="Arquivos/Lambda_function.js">Clique aqui para acessar.</a>
-- [X] O Banco deve ser entregue em script SQL junto ao repositório. <a href="Arquivos/Script-SQL">Clique aqui para acessar.</a>
+- [X] A aplicação precisa ser configurada no API Gateway da AWS. <a href="Arquivos/API-Gateway">[Link]</a>
+- [X] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática. <a href="Arquivos/SNS">[Link]</a>
+- [X] A aplicação precisa ter no mínimo um Lambda. <a href="Arquivos/Lambda/Lambda_function.js">[Link]</a>
+- [X] O Banco deve ser entregue em script SQL junto ao repositório. <a href="Arquivos/Script-SQL">[Link]</a>
 - [X] Liste os endpoints no README.md
 
 <h3 id="RQFuncionais">Requisitos Funcionais</h3>
