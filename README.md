@@ -7,7 +7,11 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 	<a href="https://storyset.com/work">
 		<img src="Arquivos/img/Scrum board.gif" min-width="350px" max-width="350px" width="350px" align="right"  alt="Work illustrations by Storyset" title="Work illustrations by Storyset">
 	</a>
-	<li><a href="Arquivos/Apresentacao">Apresentação: Slides e Vídeos</a></li>
+	<li><a href="Arquivos/Apresentacao">Apresentação</a></li>
+	<ul>
+		<li><a href="Arquivos/Apresentacao/Slides_SQUAD_DezKTop.pdf">Slides</a></li>
+		<li><a href="https://youtu.be/1LcA_5C8uHc">Demonstração em Vídeo</a></li>
+	</ul>
 	<li><a href="#requisitos">Requisitos e Funcionalidades</a></li>
 	<ul>
 		<li><a href="#RQEntrega">Requisitos de Entrega</a></li>
