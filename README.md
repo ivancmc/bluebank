@@ -7,7 +7,7 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 	<a href="https://storyset.com/work">
 		<img src="Arquivos/img/Scrum board.gif" min-width="350px" max-width="350px" width="350px" align="right"  alt="Work illustrations by Storyset" title="Work illustrations by Storyset">
 	</a>
-	<li><a href="Arquivos/Apresentacao">Apresentação</a></li>
+	<li><a href="#apresentacao">Apresentação</a></li>
 	<ul>
 		<li><a href="Arquivos/Apresentacao/Slides_SQUAD_DezKTop.pdf">Slides</a></li>
 		<li><a href="https://youtu.be/1LcA_5C8uHc">Demonstração em Vídeo</a></li>
@@ -39,8 +39,16 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 </ul>
 
 <h1 align="center" id="apresentacao">Apresentação</h1>
-Hey !! Agradecemos o seu interesse no nosso projeto 😃.<br>Preparamos um gif para você dar uma olhadinha no funcionamento da nossa API !<br>
-<img src="Arquivos/Apresentacao/Bluebank.gif"></img>
+Hey !! Agradecemos o seu interesse no nosso projeto 😃.<br>Preparamos alguns gifs para você dar uma olhadinha no funcionamento da nossa API !<br>
+Nossa demonstração consiste em: Construir uma Pipeline no Jenkins, criar um cliente e cadastrá-lo nos serviços de SNS para que ele possa receber os emails da nossa API, e mostramos a relização de um saque e de um pagamento - e os extratos de ambas as transações.<br>
+Você pode ver o vídeo original clicando <a href="https://youtu.be/1LcA_5C8uHc">aqui</a> ou acessando diretamente do <a href="#topo">Sumário</a>.
+<br><br>
+<div align="center">
+	<img src="Arquivos/Apresentacao/Bluebank_Jenkins.gif" alt="Demonstração em gif - Jenkins" title="BlueBank API"></img><br>
+	<img src="Arquivos/Apresentacao/Blue_Bank_SNS.gif" alt="Demonstração em gif - Confirmação SNS" title="BlueBank API"></img><br>
+	<img src="Arquivos/Apresentacao/Blue_Bank_SNS_2.gif" alt="Demonstração em gif - Notificação SNS" title="BlueBank API"></img><br>
+	<img src="Arquivos/Apresentacao/Blue_Bank_Transacoes.gif" alt="Demonstração em gif - Transações" title="BlueBank API"></img>
+</div>
 
 <h1 align="center" id="requisitos">Requisitos e Funcionalidades</h1>
 <h3 id="RQEntrega">Requisitos de Entrega</h3>
