@@ -1,0 +1,797 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API para gerenciar as transações de um banco fictício utilizando Java, MySQL e AWS.",
+    "version": "1.0.0",
+    "title": "API Bluebank: Squad Dezktop"
+  },
+  "host": "y627nu63c3.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/dezktop",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/agendamento/efetivar": {
+      "get": {
+        "operationId": "agendamentosUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfTransacaoModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8102/agendamento/efetivar",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/cliente": {
+      "post": {
+        "operationId": "postUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ClienteModel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClienteModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/MODEL4e6766"
+            }
+          },
+          "201": {
+            "description": "201 response"
+          },
+          "400": {
+            "description": "400 response"
+          },
+          "401": {
+            "description": "401 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "POST",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/cliente",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/cliente/{cpf}": {
+      "get": {
+        "operationId": "getByCpfUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ClienteModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/cliente/{cpf}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.cpf": "method.request.path.cpf"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      },
+      "put": {
+        "operationId": "updateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ClienteModel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClienteModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ClienteModel"
+            }
+          },
+          "400": {
+            "description": "400 response"
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "PUT",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/cliente/{cpf}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.cpf": "method.request.path.cpf"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      },
+      "delete": {
+        "operationId": "deleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/MODEL9f9297"
+            }
+          },
+          "400": {
+            "description": "400 response"
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "DELETE",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/cliente/{cpf}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.cpf": "method.request.path.cpf"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/clientes": {
+      "get": {
+        "operationId": "getAllUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfClienteModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/clientes",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/conta/cpf/{cpf}": {
+      "get": {
+        "operationId": "getByCpfUsingGET_1",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ContaModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/conta/cpf/{cpf}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.cpf": "method.request.path.cpf"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/conta/numero/{numero}": {
+      "get": {
+        "operationId": "getByNumeroUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "numero",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ContaModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/conta/numero/{numero}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.numero": "method.request.path.numero"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/deposito": {
+      "post": {
+        "operationId": "depositoUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "TransacaoModel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransacaoModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/TransacaoModel"
+            }
+          },
+          "201": {
+            "description": "201 response"
+          },
+          "400": {
+            "description": "400 response"
+          },
+          "401": {
+            "description": "401 response"
+          },
+          "406": {
+            "description": "406 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "POST",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8102/deposito",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/extrato/{numeroConta}": {
+      "get": {
+        "operationId": "extratoUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "numeroConta",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfTransacaoModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8102/extrato/{numeroConta}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.numeroConta": "method.request.path.numeroConta"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/extrato/{numeroConta}/{mes}/{ano}": {
+      "get": {
+        "operationId": "extratoPorMesUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "mes",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ano",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "numeroConta",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfTransacaoModel"
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8102/extrato/{numeroConta}/{mes}/{ano}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.ano": "method.request.path.ano",
+            "integration.request.path.mes": "method.request.path.mes",
+            "integration.request.path.numeroConta": "method.request.path.numeroConta"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/inscrever/{email}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/inscrever/{email}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.email": "method.request.path.email"
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/notificar": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {},
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "GET",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8101/notificar",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/saque": {
+      "post": {
+        "operationId": "saqueUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "TransacaoModel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransacaoModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/TransacaoModel"
+            }
+          },
+          "201": {
+            "description": "201 response"
+          },
+          "400": {
+            "description": "400 response"
+          },
+          "401": {
+            "description": "401 response"
+          },
+          "406": {
+            "description": "406 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "POST",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8102/saque",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    },
+    "/transacao": {
+      "post": {
+        "operationId": "transferenciaUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "TransacaoModel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransacaoModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfTransacaoModel"
+            }
+          },
+          "201": {
+            "description": "201 response"
+          },
+          "400": {
+            "description": "400 response"
+          },
+          "401": {
+            "description": "401 response"
+          },
+          "406": {
+            "description": "406 response"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "POST",
+          "uri": "http://ec2-3-82-102-219.compute-1.amazonaws.com:8102/transacao",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ContaExternaModel": {
+      "type": "object",
+      "properties": {
+        "agencia": {
+          "type": "string"
+        },
+        "banco": {
+          "type": "string"
+        },
+        "cnpj": {
+          "type": "string"
+        },
+        "conta": {
+          "type": "string"
+        },
+        "cpf": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "titulo": {
+          "type": "string"
+        }
+      },
+      "title": "ContaExternaModel"
+    },
+    "ArrayOfTransacaoModel": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TransacaoModel"
+      }
+    },
+    "ContaModel": {
+      "type": "object",
+      "properties": {
+        "agencia": {
+          "type": "string"
+        },
+        "clienteCPF": {
+          "type": "string"
+        },
+        "numeroConta": {
+          "type": "string"
+        },
+        "saldo": {
+          "type": "number"
+        }
+      },
+      "title": "ContaModel"
+    },
+    "MODEL9f9297": {
+      "type": "object"
+    },
+    "ClienteModel": {
+      "type": "object",
+      "properties": {
+        "conta": {
+          "$ref": "#/definitions/ContaModel"
+        },
+        "cpf": {
+          "type": "string"
+        },
+        "dataNascimento": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
+          "type": "string"
+        },
+        "endereco": {
+          "type": "string"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "rg": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        },
+        "telefone": {
+          "type": "string"
+        }
+      },
+      "title": "ClienteModel"
+    },
+    "ArrayOfClienteModel": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ClienteModel"
+      }
+    },
+    "TransacaoModel": {
+      "type": "object",
+      "properties": {
+        "agendamento": {
+          "$ref": "#/definitions/AgendamentoModel"
+        },
+        "categoria": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "contaDestino": {
+          "type": "string"
+        },
+        "contaExterna": {
+          "$ref": "#/definitions/ContaExternaModel"
+        },
+        "contaOrigem": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "momento": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tipo": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "valor": {
+          "type": "number"
+        }
+      },
+      "title": "TransacaoModel"
+    },
+    "AgendamentoModel": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "AgendamentoModel"
+    },
+    "MODEL4e6766": {
+      "type": "object"
+    }
+  }
+}
