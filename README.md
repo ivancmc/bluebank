@@ -58,7 +58,7 @@ Você pode ver o vídeo original clicando <a href="https://youtu.be/1LcA_5C8uHc"
 - [X] A aplicação deve ter um pipeline em Jenkins ou no Aws Build.
 - [X] A aplicação precisa ser configurada no API Gateway da AWS. <a href="Arquivos/API-Gateway">[Link]</a>
 - [X] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática. <a href="Arquivos/SNS">[Link]</a>
-- [X] A aplicação precisa ter no mínimo um Lambda. <a href="Arquivos/Lambda/Lambda_function.js">[Link]</a>
+- [X] A aplicação precisa ter no mínimo um Lambda. <a href="Arquivos/Lambda">[Link]</a>
 - [X] O Banco deve ser entregue em script SQL junto ao repositório. <a href="Arquivos/Script-SQL">[Link]</a>
 - [X] Liste os endpoints no README.md
 
