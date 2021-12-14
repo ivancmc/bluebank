@@ -54,7 +54,7 @@ Você pode ver o vídeo original clicando <a href="https://youtu.be/1LcA_5C8uHc"
 <h3 id="RQEntrega">Requisitos de Entrega</h3>
 
 - [X] O código deve ser entregue em um repositório no Github.
-- [X] A API deve ser disponibilizada em ambiente AWS com EC2 e em Beanstalk.
+- [X] A API deve ser disponibilizada em ambiente AWS com EC2 ou em Beanstalk.
 - [X] A aplicação deve ter um pipeline em Jenkins ou no Aws Build.
 - [X] A aplicação precisa ser configurada no API Gateway da AWS. <a href="Arquivos/API-Gateway">[Link]</a>
 - [X] A aplicação precisa ter no mínimo um endpoint de SNS para cadastro de emails e verificação automática. <a href="Arquivos/SNS">[Link]</a>
