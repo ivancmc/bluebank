@@ -11,6 +11,7 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 	<ul>
 		<li><a href="Arquivos/Apresentacao/Slides_SQUAD_DezKTop.pdf">Slides</a></li>
 		<li><a href="https://youtu.be/1LcA_5C8uHc">Demonstração em Vídeo</a></li>
+		<li><a href="https://youtu.be/xeWyVoJjQWs">Apresentação do projeto para a Banca Examinadora</a></li>
 	</ul>
 	<li><a href="#requisitos">Requisitos e Funcionalidades</a></li>
 	<ul>
@@ -41,7 +42,7 @@ Esse projeto consiste em uma API para gerenciar as transações de um banco fict
 <h1 align="center" id="apresentacao">Apresentação</h1>
 Hey !! Agradecemos o seu interesse no nosso projeto 😃.<br>Preparamos alguns gifs para você dar uma olhadinha no funcionamento da nossa API !<br>
 Nossa demonstração consiste em: Construir uma Pipeline no Jenkins, criar um cliente e cadastrá-lo nos serviços de SNS para que ele possa receber os emails da nossa API, e mostramos a relização de um saque e de um pagamento - e os extratos de ambas as transações.<br>
-Você pode ver o vídeo original clicando <a href="https://youtu.be/1LcA_5C8uHc">aqui</a> ou acessando diretamente do <a href="#topo">Sumário</a>.
+Você pode ver o vídeo original clicando <a href="https://youtu.be/1LcA_5C8uHc">aqui</a>,  assistir a nossa apresentação clicando <a href="https://youtu.be/xeWyVoJjQWs">aqui</a> ou acessando diretamente do <a href="#topo">Sumário</a>.
 <br><br>
 <div align="center">
 	<img src="Arquivos/Apresentacao/Bluebank_Jenkins.gif" alt="Demonstração em gif - Jenkins" title="BlueBank API"></img><br>
@@ -333,7 +334,7 @@ A pipeline faz o checkout do projeto através do git, faz o build das aplicaçõ
 Este projeto está sob a licença MIT. Você pode achar mais informações relacionadas a essa licença no arquivo <a href="LICENSE">LICENSE</a>, contido neste repositório.
 
 <h3 id="agradecimentos">Agradecimentos</h3>
-Agradecemos ao Banco Pan e a Gama Academy pela iniciativa do projeto Pan Academy, que possibilitou uma nova jornada de conhecimento a todos os selecionados. Aos aos professores, por nos acompanhar e instruir nessa jornada. A todos os mentores que dedicaram um pouco do seu tempo compartilhando conhecimentos e experiências conosco. Aos nossos colegas de classe. E por último, aos membros da nossa Squad, sem nenhum de nós, esse projeto não seria possível.
+Agradecemos ao Banco Pan e a Gama Academy pela iniciativa do projeto Pan Academy, que possibilitou uma nova jornada de conhecimento a todos os selecionados. Aos professores, por nos acompanhar e instruir nessa jornada. A todos os mentores que dedicaram um pouco do seu tempo compartilhando conhecimentos e experiências conosco. Aos nossos colegas de classe. E por último, aos membros da nossa Squad, sem nenhum de nós, esse projeto não seria possível.
 
 <h3 id="squad">Nós somos a Squad DezKTop...</h3>
 Você pode ver mais acerca do nosso desenvolvimento através dos repositórios contidos no GitHub e nos contatar pelo linkedin. Agradecemos desde já o tempo que você dedicou a leitura deste arquivo.😄
